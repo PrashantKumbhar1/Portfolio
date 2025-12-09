@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Github, Linkedin, Download } from "lucide-react";
-import heroBg from "@assets/generated_images/subtle_dark_abstract_cybersecurity_background.png";
+import heroBg from "../../assets/hero-bg.png";
 
 export default function Hero() {
   return (
