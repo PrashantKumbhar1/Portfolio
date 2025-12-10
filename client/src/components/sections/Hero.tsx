@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Github, Linkedin, Download } from "lucide-react";
-import heroBg from "../../assets/hero-bg.png";
+//import heroBg from "../../assets/hero-bg.png";
+const heroBg = "/hero-bg.png"; // because it's in client/public
+
 
 export default function Hero() {
   return (
