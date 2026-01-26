@@ -3,11 +3,46 @@ import { Badge } from "@/components/ui/badge";
 
 export default function Skills() {
   const skills = {
-    "Languages": ["JavaScript", "Python", "C", "SQL", "Java (Basics)"],
-    "Web Technologies": ["HTML5", "CSS3", "React", "Node.js (Basic)", "Express", "Tailwind CSS"],
-    "Cybersecurity": ["Network Security", "OWASP Top 10", "Cryptography Basics", "Wireshark", "Burp Suite", "Nmap"],
-    "Tools & Platforms": ["Git", "GitHub", "VS Code", "Linux (Kali/Ubuntu)", "Postman"],
-    "CS Fundamentals": ["Data Structures", "Algorithms", "DBMS", "OS", "Computer Networks"]
+    "Cybersecurity & AI Security": [
+      "AI-based phishing detection",
+      "Threat analysis & Security intelligence",
+      "Web application security (OWASP Top 10)",
+      "Network security fundamentals",
+      "Cryptography & Authentication concepts",
+      "Linux (Kali / Ubuntu for security workflows)",
+      "Security tools exposure: Wireshark, Nmap, Burp Suite"
+    ],
+    "Programming & Core Development": [
+      "JavaScript",
+      "TypeScript",
+      "Python",
+      "SQL",
+      "C",
+      "Data Structures & Algorithms"
+    ],
+    "Web & System Development": [
+      "HTML5",
+      "CSS3",
+      "React",
+      "Node.js",
+      "Express",
+      "Tailwind CSS",
+      "Secure API design fundamentals"
+    ],
+    "Tools & Platforms": [
+      "Git",
+      "GitHub",
+      "VS Code",
+      "Browser DevTools",
+      "Postman"
+    ],
+    "Computer Science Foundations": [
+      "Operating Systems",
+      "Computer Networks",
+      "DBMS",
+      "Software Engineering fundamentals",
+      "Quantum Computing basics (academic exposure)"
+    ]
   };
 
   return (
@@ -17,9 +52,12 @@ export default function Skills() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Technical Skills</h2>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            Technical Skills
+          </h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
         </motion.div>
 
@@ -27,21 +65,31 @@ export default function Skills() {
           {Object.entries(skills).map(([category, items], index) => (
             <motion.div
               key={category}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-card/50 border border-white/5 p-6 rounded-xl hover:border-primary/30 transition-all group"
+              transition={{
+                delay: index * 0.08,
+                duration: 0.45,
+                ease: "easeOut"
+              }}
+              whileHover={{ y: -4 }}
+              className={`bg-card/50 border border-white/5 p-6 rounded-xl
+                hover:border-primary/40 transition-all group
+                ${index === 0 ? "lg:col-span-2" : ""}`}
             >
               <h3 className="text-xl font-display font-semibold mb-6 text-primary group-hover:text-glow transition-all">
                 {category}
               </h3>
+
               <div className="flex flex-wrap gap-2">
                 {items.map((skill) => (
-                  <Badge 
-                    key={skill} 
-                    variant="secondary" 
-                    className="bg-secondary/50 hover:bg-primary/20 hover:text-primary transition-colors py-1.5 px-3"
+                  <Badge
+                    key={skill}
+                    variant="secondary"
+                    className="bg-secondary/50 py-1.5 px-3
+                      hover:bg-primary/15 hover:text-primary
+                      transition-colors cursor-default"
                   >
                     {skill}
                   </Badge>

@@ -1,36 +1,49 @@
 import { motion } from "framer-motion";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, ShieldCheck } from "lucide-react";
 
 export default function Projects() {
   const projects = [
     {
-      title: "TravelMate",
-      subtitle: "Online Bus Booking System",
-      description: "A comprehensive bus booking prototype with search, filters, seat selection, and secure payment flow. Features a modern, user-friendly interface.",
-      tags: ["JavaScript", "HTML/CSS", "SQL", "UX Design"],
-      link: "#",
-      github: "#",
+      title: "AI-Phishing-Guard",
+      subtitle: "AI-Based Phishing Detection System",
+      description:
+        "An intelligent cybersecurity system that detects phishing attempts using machine learning. It analyzes URLs and message patterns to identify malicious behavior, focusing on real-world attack scenarios and proactive cyber defense.",
+      tags: ["Cybersecurity", "Machine Learning", "Phishing Detection", "AI Security"],
+      featured: true,
+      securityFocus: true
+    },
+    {
+      title: "CivicLens-AI",
+      subtitle: "AI-Powered Civic Issue Reporting & Urban Intelligence Platform",
+      description:
+        "CivicLens-AI is a smart civic platform that lets citizens report city issues using images and location data. It uses AI to analyze complaints, detect severity and duplicates, and help authorities prioritize and resolve issues faster through dashboards, maps, and analytics.",
+      tags: ["AI", "React", "Node.js", "MongoDB", "Threat Intelligence"],
       featured: true
     },
     {
-      title: "Gamified Learning Platform",
-      subtitle: "Educational Tech Concept",
-      description: "An engagement-focused platform for engineering students using challenges, levels, and rewards to gamify the learning process.",
-      tags: ["React Concept", "Education", "Gamification"],
-      link: "#",
-      github: "#",
+      title: "TravelMate",
+      subtitle: "Online Bus Booking Platform",
+      description:
+        "A full-stack web application for online bus booking with search, filters, seat selection, and a smooth booking flow. Built with strong emphasis on UI/UX, clean architecture, and secure data handling.",
+      tags: ["JavaScript", "HTML", "CSS", "SQL", "UI/UX"],
       featured: false
     },
     {
-      title: "Algorithm Visualizer",
-      subtitle: "Interactive Learning Tool",
-      description: "Visualizing complex algorithms like sorting and pathfinding step-by-step to aid understanding of internal logic.",
-      tags: ["JavaScript", "DSA", "Visualization"],
-      link: "#",
-      github: "#",
+      title: "Gamified Learning Platform",
+      subtitle: "Education Technology Concept",
+      description:
+        "A conceptual learning platform designed to increase student engagement using challenges, rewards, and leaderboards, focusing on product thinking and scalable feature design.",
+      tags: ["React Concept", "Gamification", "Education"],
       featured: false
     }
   ];
@@ -38,43 +51,75 @@ export default function Projects() {
   return (
     <section id="projects" className="py-24 bg-secondary/30">
       <div className="container px-6">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Featured Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            Projects
+          </h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full" />
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+            Selected projects showcasing my focus on Cybersecurity, AI-driven Systems,
+            and Secure Software Development.
+          </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {/* Grid */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
+              key={project.title}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
+              transition={{ delay: index * 0.1, duration: 0.45 }}
+              whileHover={{ y: -8, scale: 1.01 }}
             >
-              <Card className="h-full flex flex-col bg-card border-white/5 hover:border-primary/50 transition-all duration-300 overflow-hidden group">
-                <div className="h-2 bg-gradient-to-r from-primary to-purple-600 w-full" />
+              <Card
+                className={`relative h-full flex flex-col bg-card border-white/5 overflow-hidden
+                transition-all duration-300
+                hover:border-primary/50 hover:shadow-[0_0_30px_-10px_rgba(59,130,246,0.4)]
+                ${project.featured ? "ring-1 ring-primary/30" : ""}`}
+              >
+                {/* Accent line */}
+                <div className="h-1.5 bg-gradient-to-r from-primary to-purple-600 w-full group-hover:opacity-100" />
+
                 <CardHeader>
-                  <CardTitle className="font-display text-xl text-foreground flex justify-between items-start">
-                    {project.title}
-                  </CardTitle>
+                  <div className="flex items-center gap-2">
+                    <CardTitle className="font-display text-xl text-foreground">
+                      {project.title}
+                    </CardTitle>
+
+                    {project.securityFocus && (
+                      <Badge className="bg-primary/15 text-primary border border-primary/40 flex items-center gap-1">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                        Security Focus
+                      </Badge>
+                    )}
+                  </div>
+
                   <CardDescription className="text-primary font-medium">
                     {project.subtitle}
                   </CardDescription>
                 </CardHeader>
+
                 <CardContent className="flex-grow">
                   <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
                     {project.description}
                   </p>
+
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
-                      <Badge key={tag} variant="outline" className="border-white/10 bg-white/5 text-xs">
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className="border-white/10 bg-white/5 text-xs"
+                      >
                         {tag}
                       </Badge>
                     ))}
