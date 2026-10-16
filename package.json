@@ -7,11 +7,12 @@
     "dev:client": "vite dev --port 5000",
     "dev": "vite",
     "server": "cross-env NODE_ENV=development tsx server/index.ts",
-    "build": "vite build",
+    "build": "vite build --configLoader runner",
     "start": "NODE_ENV=production node dist/index.cjs",
     "check": "tsc",
     "db:push": "drizzle-kit push",
-    "preview": "vite preview"
+    "preview": "vite preview --configLoader runner",
+    "test:portfolio": "node script/verify-portfolio.mjs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

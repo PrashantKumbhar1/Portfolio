@@ -1,29 +1,18 @@
-import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/not-found";
-import Home from "@/pages/Home";
+﻿import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { Route, Switch } from 'wouter';
+import Home from './pages/Home';
+import NotFound from './pages/not-found';
 
-function Router() {
-  return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route component={NotFound} />
-    </Switch>
-  );
+class PortfolioBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch(error: Error, info: ErrorInfo) { console.error('Portfolio rendering error', error, info.componentStack); }
+  render() {
+    if (this.state.failed) return <main className="recovery-page"><span className="eyebrow">PRASHANT KUMBHAR / PORTFOLIO</span><h1>This view couldn’t load.</h1><p>Please reload the page to try again.</p><button className="button-primary" onClick={() => window.location.reload()}>Reload portfolio</button></main>;
+    return this.props.children;
+  }
 }
 
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
-    </QueryClientProvider>
-  );
+export default function App() {
+  return <PortfolioBoundary><Switch><Route path="/" component={Home}/><Route component={NotFound}/></Switch></PortfolioBoundary>;
 }
-
-export default App;
