@@ -34,7 +34,7 @@ Earlier visual styles and section components remain as historical source but are
 
 ## Contact delivery
 
-The form reuses the repository’s existing EmailJS service, template, and public account identifier through the installed browser SDK. It sends name, email, optional subject, and full message. Every field is also included in `message`, keeping compatibility with an existing template that only renders `{{message}}`.
+The form uses the replacement EmailJS service `service_h9q0mxy`, with the existing template and public account identifier through the installed browser SDK. It sends name, email, optional subject, and full message. Every field is also included in `message`, keeping compatibility with an existing template that only renders `{{message}}`.
 
 The form provides inline validation, max lengths, a honeypot, duplicate-submit protection, a one-minute client cooldown after confirmed success, loading feedback, and errors that preserve the message. Success appears only after EmailJS returns HTTP 200. Failed sends do not consume the success cooldown. A 20-second response timeout restores the form, and errors expose the actual service status and text under Email service details. Timeout does not prove nondelivery, so the UI warns before a duplicate send. API acceptance is not an independent inbox-delivery receipt. Client-side controls reduce obvious abuse; they are not a substitute for the provider’s rate limits and account protections.
 
@@ -52,7 +52,7 @@ If configuring a different account, set the template’s recipient to `kumbharpr
 
 A single live verification send was explicitly approved by the user and attempted. EmailJS returned HTTP 403: “API access from non-browser environments is currently disabled.” No verification email was delivered by that attempt. The account security setting was left unchanged.
 
-A real browser submission and inbox check remain required. Browser automation was unavailable in this environment. Do not describe delivery as verified until this check succeeds. See the official SDK documentation: https://www.emailjs.com/docs/sdk/send/ and https://www.emailjs.com/docs/sdk/options/.
+The subsequent browser submission identified HTTP 412 `Gmail_API: Invalid grant` on the old service. The user supplied replacement service `service_h9q0mxy`, now configured in the source and environment example. A real browser submission using the replacement and inbox check remain required. Browser automation was unavailable in this environment. Do not describe delivery as verified until this check succeeds. See the official SDK documentation: https://www.emailjs.com/docs/sdk/send/ and https://www.emailjs.com/docs/sdk/options/.
 
 ## Validation
 

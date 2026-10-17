@@ -36,7 +36,7 @@ export default function Contact() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const serviceId = "service_z99kepf";
+    const serviceId = "service_h9q0mxy";
     const templateId = "template_se0l83o";
     const publicKey = "muxiwr4l_a10uDG75";
 

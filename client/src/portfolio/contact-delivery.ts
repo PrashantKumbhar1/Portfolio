@@ -8,7 +8,7 @@ export class DeliveryTimeout extends Error {
 }
 export async function sendContact(values: ContactValues, options: { send?: Sender; timeoutMs?: number; config?: { service: string; template: string; publicKey: string } } = {}) {
   const config = options.config ?? {
-    service: import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_z99kepf',
+    service: import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_h9q0mxy',
     template: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_se0l83o',
     publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'muxiwr4l_a10uDG75',
   };
