@@ -111,3 +111,6 @@
 }
 @media(max-width:370px) { .model-object { scale: .82; } .model-viewport { height: 250px; } }
 @media(prefers-reduced-motion:reduce) { .model-object,.feature-plane,.civic-tier,.qr-explanation { transition: none; } }
+.delivery-diagnostic { border-top: 1px solid var(--line); padding-top: 13px; margin-top: 12px; }
+.delivery-diagnostic summary { cursor: pointer; color: #ceb3d9; font-size: 11px; }
+.delivery-diagnostic p { color: #c8b7d2; font: 10px/1.9 'JetBrains Mono',monospace; overflow-wrap: anywhere; margin-top: 10px; }

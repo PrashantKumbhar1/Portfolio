@@ -17,3 +17,19 @@ console.log('PASS: all five case studies, three detail views and valid concept r
 for(let index=0;index<7;index++){const dest=path.join(root,'portfolio',`Skill-${index}.mjs`);compile('client/src/portfolio/SkillExplorer.tsx',dest,text=>text.replace('useState(0)',`useState(${index})`));const {SkillExplorer}=await import(pathToFileURL(dest));const rendered=renderToStaticMarkup(createElement(SkillExplorer));assert.equal((rendered.match(/aria-pressed="true"/g)||[]).length,1);if(index===1){assert.ok(rendered.includes('NETRA'));assert.ok(rendered.includes('OSINT'));assert.ok(!/\(interest\)|\(planned\)/i.test(rendered));}if(index===4){assert.ok(rendered.includes('HTML'));assert.ok(rendered.includes('CSS'));}if(index===5)assert.ok(rendered.includes('Firebase'));}
 console.log('PASS: seven skill categories, clean tool labels, languages, web foundations and databases.');
 const {validateContact,buildContactParams}=await import(pathToFileURL(path.join(root,'portfolio/contact-validation.mjs')));const valid={name:'Visitor Test',email:'visitor@example.com',subject:'Internship enquiry',message:'I would like to discuss a cybersecurity internship opportunity.',website:''};assert.deepEqual(validateContact(valid),{});assert.ok(validateContact({...valid,email:'invalid'}).email);assert.ok(validateContact({...valid,name:'A'}).name);assert.ok(validateContact({...valid,message:'short'}).message);assert.ok(validateContact({...valid,message:'x'.repeat(6001)}).message);assert.ok(validateContact({...valid,subject:'x'.repeat(121)}).subject);assert.ok(validateContact({...valid,website:'bot'}).website);const payload=buildContactParams(valid);assert.equal(payload.to_email,'kumbharprashant494@gmail.com');for(const value of [valid.name,valid.email,valid.subject,valid.message])assert.ok(payload.message.includes(value));assert.equal(buildContactParams({...valid,subject:''}).subject,'Portfolio enquiry');console.log('PASS: contact validation, honeypot, length limits, optional subject and complete delivery payload.');
+const {sendContact,deliveryError,DeliveryTimeout}=await import(pathToFileURL(path.join(root,'portfolio/contact-delivery.mjs')));
+const testConfig={service:'test-service',template:'test-template',publicKey:'public-test-key'};
+let attempts=0;
+const simulatedSender=async(service,template,params,options)=>{attempts++;assert.equal(service,testConfig.service);assert.equal(template,testConfig.template);assert.equal(params.reply_to,valid.email);assert.equal(options.publicKey,testConfig.publicKey);assert.ok(!('limitRate'in options));if(attempts===1)throw {status:412,text:'Gmail_API: Invalid grant. Reconnect the email service.'};return {status:200,text:'OK'};};
+await assert.rejects(sendContact(valid,{send:simulatedSender,config:testConfig}),error=>error.status===412);
+assert.equal((await sendContact(valid,{send:simulatedSender,config:testConfig})).status,200);
+assert.equal(attempts,2);
+await assert.rejects(sendContact(valid,{send:async()=>new Promise(()=>{}),config:testConfig,timeoutMs:5}),error=>error instanceof DeliveryTimeout);
+await assert.rejects(sendContact(valid,{send:async()=>({status:500,text:'Provider failure'}),config:testConfig}),error=>error.status===500);
+assert.ok(deliveryError({status:412,text:'Gmail_API: Invalid grant'}).message.includes('reconnect'));
+assert.ok(deliveryError({status:403,text:'The origin is not allowed'}).message.includes('domain'));
+assert.ok(deliveryError({status:400,text:'The template ID is invalid'}).detail.includes('template ID'));
+assert.ok(deliveryError({status:429,text:'Too many requests'}).message.includes('wait'));
+assert.ok(deliveryError(new TypeError('Failed to fetch')).message.includes('connect'));
+assert.ok(!/résumé/i.test(html));
+console.log('PASS: EmailJS rejection, immediate retry after failure, success, timeout, provider diagnostics, and normal Resume spelling.');

@@ -23,12 +23,12 @@ Netlify uses the existing `netlify.toml`: build `npm run build`, publish `client
 - `client/src/portfolio/redesign.css`: active design system, background, glass surfaces, responsive layouts, contrast, and reduced-motion fallbacks.
 - `ProjectShowcase.tsx`: distinct ThreatCore, NETRA, QR, URL-analysis, and secure-API illustrations with selectable stages.
 - `SkillExplorer.tsx`: seven comprehensive capability categories with clean tool labels and contextual descriptions.
-- `data.ts`: résumé-based project records, stage descriptions, scope, and outcomes. The forensics project is named NETRA; its current status is Active development. ThreatCore is in Final-stage development, based on the user’s latest progress update.
+- `data.ts`: Resume-based project records, stage descriptions, scope, and outcomes. The forensics project is named NETRA; its current status is Active development. ThreatCore is in Final-stage development, based on the user’s latest progress update.
 - `CaseStudy.tsx`, `InvestigationMap.tsx`, `CommandPalette.tsx`, `Modal.tsx`: reusable details, relationships, keyboard search, and native dialog behavior.
 - `ProjectModels.tsx`, `project-refinements.css`: three distinct rotatable CSS 3D models, four NETRA stage cards, and uncropped image presentation. The former simulated investigation is no longer imported or available in the site.
-- `ContactSection.tsx`, `contact-validation.ts`: form integration, validation, and complete email payload.
+- `ContactSection.tsx`, `contact-validation.ts`, `contact-delivery.ts`: form integration, validation, complete email payload, timeout handling, and service-specific diagnostics.
 
-The hero uses the unchanged original `client/public/profile.png` at its native 1728 × 1931 resolution, with full aspect ratio and no crop or color filter. This source is not native 4K. The optimized copy remains for the existing social image. `pillai-logo.png` is the available Pillai College of Engineering logo. `social-preview.jpg` is a custom 1200 × 630 sharing image using the portrait. The source résumé download is retained without alteration.
+The hero uses the unchanged original `client/public/profile.png` at its native 1728 × 1931 resolution, with full aspect ratio and no crop or color filter. This source is not native 4K. The optimized copy remains for the existing social image. `pillai-logo.png` is the available Pillai College of Engineering logo. `social-preview.jpg` is a custom 1200 × 630 sharing image using the portrait. The source Resume download is retained without alteration.
 
 Earlier visual styles and section components remain as historical source but are not imported by the active page.
 
@@ -36,7 +36,7 @@ Earlier visual styles and section components remain as historical source but are
 
 The form reuses the repository’s existing EmailJS service, template, and public account identifier through the installed browser SDK. It sends name, email, optional subject, and full message. Every field is also included in `message`, keeping compatibility with an existing template that only renders `{{message}}`.
 
-The form provides inline validation, max lengths, a honeypot, duplicate-submit protection, a one-minute client cooldown and SDK throttle, loading feedback, and errors that preserve the message. Success appears only after EmailJS returns HTTP 200. API acceptance is not an independent inbox-delivery receipt. Client-side controls reduce obvious abuse; they are not a substitute for the provider’s rate limits and account protections.
+The form provides inline validation, max lengths, a honeypot, duplicate-submit protection, a one-minute client cooldown after confirmed success, loading feedback, and errors that preserve the message. Success appears only after EmailJS returns HTTP 200. Failed sends do not consume the success cooldown. A 20-second response timeout restores the form, and errors expose the actual service status and text under Email service details. Timeout does not prove nondelivery, so the UI warns before a duplicate send. API acceptance is not an independent inbox-delivery receipt. Client-side controls reduce obvious abuse; they are not a substitute for the provider’s rate limits and account protections.
 
 No private API key is used or exposed. EmailJS’s public account identifier is intentionally a browser configuration value. Optional overrides are documented in `.env.example`:
 
