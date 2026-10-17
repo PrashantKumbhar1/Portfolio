@@ -10,6 +10,7 @@ import { SkillExplorer } from '../portfolio/SkillExplorer';
 import { person, projectById } from '../portfolio/data';
 import '../portfolio/redesign.css';
 import '../portfolio/project-refinements.css';
+import '../portfolio/mobile-polish.css';
 
 function PortraitScene(){
   return <div className="portrait-scene"><svg className="portrait-topology" viewBox="0 0 540 560" aria-hidden="true"><path d="M20 170H80L110 120H440L500 180V420L450 460H70L20 400Z M60 80H410L480 130 M60 490H470 M30 240H100 M420 330H520"/><circle cx="20" cy="170" r="4"/><circle cx="500" cy="180" r="4"/><circle cx="420" cy="330" r="4"/></svg><div className="portrait-depth"><div className="portrait-backplate"/><figure className="hero-photograph"><img src="/profile.png" alt="Prashant Kumbhar" width="1728" height="1931" decoding="async" fetchPriority="high"/><figcaption><span>PRASHANT KUMBHAR</span><Fingerprint size={24} strokeWidth={1}/></figcaption></figure><div className="portrait-research-note"><Fingerprint size={25} strokeWidth={1}/><div><span>ACTIVE DEVELOPMENT</span><strong>NETRA</strong><small>Evidence. Context. Reconstruction.</small></div></div></div><div className="portrait-meta"><span>BASED IN THANE, INDIA</span><span>LEARNING / BUILDING / INVESTIGATING</span></div></div>;
@@ -22,6 +23,14 @@ function Experience(){
 export default function Home(){
   const [projectId,setProjectId]=useState<string|null>(null),[commandOpen,setCommandOpen]=useState(false),[menuOpen,setMenuOpen]=useState(false),[mapOpen,setMapOpen]=useState(false);
   const project=projectId?projectById(projectId):undefined;
+  useEffect(()=>{
+    if(!menuOpen)return;
+    const dismiss=(event:PointerEvent)=>{if(!(event.target as Element).closest('.new-header'))setMenuOpen(false);};
+    const escape=(event:KeyboardEvent)=>{if(event.key==='Escape')document.querySelector<HTMLButtonElement>('.menu-control')?.focus();};
+    const resize=()=>{if(window.innerWidth>680)setMenuOpen(false);};
+    document.addEventListener('pointerdown',dismiss);document.addEventListener('keydown',escape);window.addEventListener('resize',resize);
+    return()=>{document.removeEventListener('pointerdown',dismiss);document.removeEventListener('keydown',escape);window.removeEventListener('resize',resize);};
+  },[menuOpen]);
   useEffect(()=>{const handler=(event:KeyboardEvent)=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if(!projectId&&!mapOpen)setCommandOpen(value=>!value);}if(event.key==='Escape')setMenuOpen(false);};window.addEventListener('keydown',handler);return()=>window.removeEventListener('keydown',handler);},[projectId,mapOpen]);
   function openProject(id:string){setCommandOpen(false);setMapOpen(false);setProjectId(id);}
   return <div className="portfolio-rebuild"><a className="skip-link" href="#main">Skip to content</a><div className="forensic-atmosphere" aria-hidden="true"><div className="grain-layer"/><svg viewBox="0 0 1600 1100" preserveAspectRatio="xMidYMid slice"><defs><pattern id="forensic-crosses" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M0 0H7M0 0V7"/></pattern></defs><rect width="1600" height="1100" fill="url(#forensic-crosses)"/><path d="M850 -100C420 190 1600 200 1080 550S1250 900 1650 1100 M875 -100C445 190 1625 200 1105 550S1275 900 1675 1100 M900 -100C470 190 1650 200 1130 550S1300 900 1700 1100"/></svg></div><header className="new-header"><a className="personal-identity" href="#overview"><Fingerprint size={29} strokeWidth={1}/><span>Prashant Kumbhar<small>CYBERSECURITY / DFIR / AI</small></span></a><nav id="site-navigation" className={menuOpen?'new-navigation open':'new-navigation'} aria-label="Main navigation">{[['education','Education'],['work','Work'],['skills','Skills'],['experience','Experience']].map(([id,label])=><a key={id} href={`#${id}`} onClick={()=>setMenuOpen(false)}>{label}</a>)}<a href="#contact" className="nav-connect" onClick={()=>setMenuOpen(false)}>Let’s talk <ArrowUpRight size={15}/></a></nav><div className="navigation-controls"><button className="search-control" onClick={()=>setCommandOpen(true)} aria-label="Search portfolio, Control or Command K"><Search size={16}/><kbd>⌘ K</kbd></button><button className="menu-control icon-button" aria-label={menuOpen?'Close navigation':'Open navigation'} aria-expanded={menuOpen} aria-controls="site-navigation" onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X/>:<Menu/>}</button></div></header>

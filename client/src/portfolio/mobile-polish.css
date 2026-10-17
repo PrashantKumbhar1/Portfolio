@@ -1,0 +1,61 @@
+/* Mobile-only refinements: the desktop composition is unchanged. */
+@media (max-width: 680px) {
+  .new-header { gap: 6px; }
+  .personal-identity { min-width: 0; }
+  .navigation-controls { flex-shrink: 0; }
+  .search-control, .menu-control, .modal-close, .model-reset,
+  .map-toolbar .icon-button, .inspector-link { min-width: 44px; min-height: 44px; }
+  .new-navigation { max-height: calc(100dvh - 100px); overflow-y: auto; overscroll-behavior: contain; }
+  .new-navigation a { min-height: 44px; display: flex; align-items: center; }
+  .new-navigation.open { gap: 9px; }
+  .hero-action-group { flex-wrap: wrap; gap: 14px 20px; }
+  .subtle-link, .case-link, .contact-details > a, .new-footer a { min-height: 44px; }
+  .hero-current > div, .college-identity > div, .showcase-copy,
+  .skill-detail, .skill-tool-grid > div, .research-links button > span,
+  .contact-introduction, .contact-form, .map-inspector > div { min-width: 0; }
+  .college-identity > img { flex-shrink: 0; }
+  .college-identity h3 { font-size: clamp(20px, 6vw, 24px); }
+  .project-topline { flex-wrap: wrap; row-gap: 8px; }
+  .project-status { max-width: none; font-size: 9px; }
+  .tech-tags > span, .skill-tool-grid span, .contact-details span,
+  .case-header h2, .command-results button > span { overflow-wrap: anywhere; }
+  .visual-heading { font-size: 8px; line-height: 1.7; gap: 12px; }
+  .visual-stages { flex-wrap: wrap; gap: 5px; }
+  .visual-stages button, .defense-nodes button, .map-filters button,
+  .concept-node, .concept-links button { min-height: 44px; }
+  .visual-stages button { font-size: 11px; }
+  .visual-stage-description { font-size: 12px; }
+  .model-caption { flex-wrap: wrap; gap: 4px 12px; }
+  .model-caption > span { font-size: 9px; }
+  .model-reset { font-size: 10px; padding: 8px; }
+  .skill-categories button { min-width: 0; min-height: 52px; }
+  .skill-tool-grid > div { font-size: 11px; }
+  .contact-details > a { align-items: center; font-size: 12px; }
+  .contact-details svg { flex-shrink: 0; }
+  /* At least 16px prevents focus zoom on iOS without disabling user zoom. */
+  .form-field input, .form-field textarea, .command-input input { font-size: 16px; min-width: 0; }
+  .form-submit-row { flex-wrap: wrap; }
+  .form-submit-row > span { max-width: none; font-size: 10px; }
+  .modal { overscroll-behavior: contain; scroll-padding-block: 20px; }
+  .command-modal { margin-block: max(12px, env(safe-area-inset-top)); max-height: calc(100dvh - 24px); }
+  .command-input { padding-left: 16px; gap: 10px; }
+  .command-results button { gap: 10px; }
+  .case-tabs { gap: 14px; flex-wrap: wrap; }
+  .architecture-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .architecture-flow button { min-width: 0; overflow-wrap: anywhere; }
+  .graph { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .project-node { min-width: 0; grid-template-columns: 1fr; }
+  .project-node strong { overflow-wrap: anywhere; }
+  .node-status { font-size: 9px; }
+  .map-inspector { flex-wrap: wrap; }
+  .concept-links { max-width: none; }
+  .new-footer { padding-bottom: max(22px, env(safe-area-inset-bottom)); }
+}
+@media (max-width: 370px) {
+  .education-showcase { padding-inline: 18px; }
+  .college-identity { gap: 12px; }
+  .skill-categories, .skill-tool-grid { grid-template-columns: 1fr; }
+  .netra-artifacts { width: calc(100% - 24px); gap: 8px; }
+  .netra-artifacts > .evidence-sheet { padding-inline: 10px; }
+  .architecture-flow { grid-template-columns: 1fr; }
+}

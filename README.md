@@ -59,3 +59,9 @@ The subsequent browser submission identified HTTP 412 `Gmail_API: Invalid grant`
 TypeScript and production compilation pass. Render checks cover NETRA naming, education and college identity, all five case studies, all three case-study views, seven skill-category states, exactly two internship records, hackathon ordering, and internal navigation. Contact validation checks cover required fields, malformed email, length boundaries, honeypot handling, optional subject, and inclusion of every sender field in the delivery payload.
 
 The stylesheet includes desktop, tablet, and mobile breakpoints, touch-friendly controls, keyboard focus states, and reduced-motion behavior. Visual browser review and end-to-end interaction testing remain unverified because no browser surface is connected. No claims of production metrics, live visitor monitoring, or completed NETRA capabilities are made.
+
+## Pre-deployment mobile audit
+
+`mobile-polish.css` confines layout refinements to screens up to 680px (with a 370px narrow-screen adjustment), preserving desktop styling. Touch controls have larger targets, stage selectors wrap, long labels fit, form/search inputs use 16px text, and dialogs account for dynamic viewport height. The mobile menu dismisses outside the header and restores toggle focus on Escape. Contact fields are disabled during submission to protect edits from being cleared by an in-flight success.
+
+TypeScript, portfolio render/logic checks, production build, local HTTP asset checks (including Resume), and deployment ZIP integrity pass. Browser/device visual checks and live EmailJS inbox delivery remain unverified because no browser surface is connected.
