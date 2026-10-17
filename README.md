@@ -19,16 +19,16 @@ Netlify uses the existing `netlify.toml`: build `npm run build`, publish `client
 
 ## Active source
 
-- `client/src/pages/Home.tsx`: new composition, portrait interaction, education, internship timeline, hackathons, and modal orchestration.
+- `client/src/pages/Home.tsx`: new composition, full-resolution portrait, education, internship timeline, hackathons, and modal orchestration.
 - `client/src/portfolio/redesign.css`: active design system, background, glass surfaces, responsive layouts, contrast, and reduced-motion fallbacks.
 - `ProjectShowcase.tsx`: distinct ThreatCore, NETRA, QR, URL-analysis, and secure-API illustrations with selectable stages.
-- `SkillExplorer.tsx`: seven comprehensive capability categories; research and interests are labelled.
-- `data.ts`: résumé-based project records, stage descriptions, scope, and outcomes. The forensics project is named NETRA; no unverified expansion is used.
+- `SkillExplorer.tsx`: seven comprehensive capability categories with clean tool labels and contextual descriptions.
+- `data.ts`: résumé-based project records, stage descriptions, scope, and outcomes. The forensics project is named NETRA; its current status is Active development. ThreatCore is in Final-stage development, based on the user’s latest progress update.
 - `CaseStudy.tsx`, `InvestigationMap.tsx`, `CommandPalette.tsx`, `Modal.tsx`: reusable details, relationships, keyboard search, and native dialog behavior.
-- `ForensicLab.tsx`, `incident.ts`: lazy-loaded fictional investigation exercise with synthetic records, provenance, and bounded conclusions.
+- `ProjectModels.tsx`, `project-refinements.css`: three distinct rotatable CSS 3D models, four NETRA stage cards, and uncropped image presentation. The former simulated investigation is no longer imported or available in the site.
 - `ContactSection.tsx`, `contact-validation.ts`: form integration, validation, and complete email payload.
 
-The actual portrait is reused as optimized `client/public/portrait.jpg`. The original photograph is retained. `pillai-logo.png` is the available Pillai College of Engineering logo. `social-preview.jpg` is a custom 1200 × 630 sharing image using the portrait. The source résumé download is retained without alteration.
+The hero uses the unchanged original `client/public/profile.png` at its native 1728 × 1931 resolution, with full aspect ratio and no crop or color filter. This source is not native 4K. The optimized copy remains for the existing social image. `pillai-logo.png` is the available Pillai College of Engineering logo. `social-preview.jpg` is a custom 1200 × 630 sharing image using the portrait. The source résumé download is retained without alteration.
 
 Earlier visual styles and section components remain as historical source but are not imported by the active page.
 

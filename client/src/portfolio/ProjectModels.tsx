@@ -1,0 +1,21 @@
+﻿import { useRef, useState, type CSSProperties, type PointerEvent } from 'react';
+import { Code2, Database, Fingerprint, Layers3, MousePointer2, RotateCcw, ScanLine, Shield } from 'lucide-react';
+
+type Props={kind:'qr-security'|'phishing'|'civiclens';stage:number};
+const names={'qr-security':'QR analysis prism',phishing:'URL feature-analysis bench',civiclens:'Secure application stack'};
+export function ProjectModel({kind,stage}:Props){
+  const [rotation,setRotation]=useState({x:-9,y:-17});
+  const drag=useRef<{x:number;y:number;rx:number;ry:number}|null>(null);
+  function down(event:PointerEvent<HTMLDivElement>){if(event.button!==0)return;drag.current={x:event.clientX,y:event.clientY,rx:rotation.x,ry:rotation.y};event.currentTarget.setPointerCapture(event.pointerId);}
+  function move(event:PointerEvent<HTMLDivElement>){if(!drag.current)return;const d=drag.current;setRotation({x:Math.max(-32,Math.min(32,d.rx-(event.clientY-d.y)*.22)),y:Math.max(-45,Math.min(45,d.ry+(event.clientX-d.x)*.3))});}
+  return <div className={`project-model model-${kind}`} data-stage={stage}>
+    <div className="model-viewport" role="group" tabIndex={0} aria-label={`${names[kind]}. Drag horizontally with a mouse or touch, or use arrow keys to rotate.`} onPointerDown={down} onPointerMove={move} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}} onKeyDown={event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;event.preventDefault();setRotation(r=>({x:Math.max(-32,Math.min(32,r.x+(event.key==='ArrowUp'?-5:event.key==='ArrowDown'?5:0))),y:Math.max(-45,Math.min(45,r.y+(event.key==='ArrowLeft'?-6:event.key==='ArrowRight'?6:0)))}));}}>
+      <div className="model-ground"/>
+      <div className="model-object" style={{'--model-x':`${rotation.x}deg`,'--model-y':`${rotation.y}deg`,'--model-step':stage} as CSSProperties}>
+        {kind==='qr-security'&&<div className="qr-prism"><div className="qr-prism-back"><span>LINK CONTEXT</span></div><div className="qr-prism-side"/><div className="qr-prism-front"><span>QR / UPI ANALYSIS</span><ScanLine size={78} strokeWidth={.9}/><strong>{['READ','ASSESS','SCORE','EXPLAIN'][stage]}</strong><span className="prism-detail">Destination → risk → explanation</span></div><div className="qr-explanation"><Fingerprint size={20} strokeWidth={1}/><span>EXPLAINABLE<br/>RISK ASSESSMENT</span></div></div>}
+        {kind==='phishing'&&<div className="url-bench"><div className="browser-depth"/><div className="browser-plane"><div className="browser-chrome"><i/><i/><i/><span>URL ANALYSIS / ILLUSTRATIVE INPUT</span></div><code><span>https://</span>example.invalid<b>/login</b></code><div className="feature-strips"><span className={stage===0?'active':''}>Inspect the URL</span><span className={stage===1?'active':''}>Engineer features</span><span className={stage===2?'active':''}>Classify patterns</span></div></div><div className="feature-plane lexical-plane"><Code2 size={20} strokeWidth={1}/><span>LEXICAL<br/>ATTRIBUTES</span></div><div className="feature-plane classifier-plane"><Layers3 size={20} strokeWidth={1}/><span>SCIKIT-LEARN<br/>CLASSIFIER</span></div></div>}
+        {kind==='civiclens'&&<div className="civic-stack"><div className={`civic-tier data-tier ${stage>=2?'active':''}`}><Database size={28} strokeWidth={1}/><span>MONGODB</span><small>Complaint workflows</small></div><div className={`civic-tier api-tier ${stage===2?'active':''}`}><Code2 size={28} strokeWidth={1}/><span>FLASK / REST API</span><small>Create · retrieve · update</small></div><div className={`civic-tier access-tier ${stage<2?'active':''}`}><Shield size={28} strokeWidth={1}/><span>JWT / RBAC</span><small>Authenticated, role-aware access</small></div><div className="civic-support support-left"/><div className="civic-support support-right"/></div>}
+      </div>
+    </div><div className="model-caption"><span><MousePointer2 size={11}/>Drag or use arrow keys to inspect</span><button className="model-reset" aria-label={`Reset ${names[kind]}`} onClick={()=>setRotation({x:-9,y:-17})}><RotateCcw size={12}/>Reset</button></div>
+  </div>;
+}

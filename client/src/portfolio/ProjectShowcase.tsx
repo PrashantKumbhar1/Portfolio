@@ -1,27 +1,28 @@
 ﻿import { useState } from 'react';
 import { ArrowUpRight, Code2, Fingerprint, Layers3, ScanLine, Shield } from 'lucide-react';
 import { projects, type Project } from './data';
+import { ProjectModel } from './ProjectModels';
 
 export function ProjectVisual({ project }: { project: Project }) {
   const [stage, setStage] = useState(0);
   const icons = { threatcore: Shield, netra: Fingerprint, 'qr-security': ScanLine, phishing: ScanLine, civiclens: Code2 };
   const Icon = icons[project.id as keyof typeof icons];
   return <div className={`project-visual visual-${project.id}`}>
-    <div className="visual-heading"><span>{project.status === 'Completed' ? 'WORKFLOW / CONCEPTUAL VIEW' : 'ARCHITECTURE / IN EXPLORATION'}</span><span>0{stage + 1}</span></div>
+    <div className="visual-heading"><span>{project.status === 'Completed' ? 'WORKFLOW / CONCEPTUAL VIEW' : `ARCHITECTURE / ${project.status.toUpperCase()}`}</span><span>0{stage + 1}</span></div>
     <div className="project-diagram">
       {project.id === 'threatcore' && <><svg className="defense-connections" viewBox="0 0 400 240" aria-hidden="true"><path d="M90 65L300 65L300 180L90 180Z M90 65L300 180 M300 65L90 180"/></svg><div className="defense-center"><Icon size={47} strokeWidth={.9}/><span>THREATCORE</span></div><div className="defense-nodes">{project.stages.map((item, index) => <button key={item.title} className={stage === index ? 'active' : ''} onClick={() => setStage(index)} aria-pressed={stage === index}><span>0{index + 1}</span>{item.title}</button>)}</div></>}
-      {project.id === 'netra' && <div className="netra-artifacts">{project.stages.slice(0, 3).map((item, index) => <button key={item.title} aria-pressed={stage === index} className={`evidence-sheet sheet-${index} ${stage === index ? 'active' : ''}`} onClick={() => setStage(index)}><span>RESEARCH / 0{index + 1}</span>{index === 0 ? <Layers3 size={34} strokeWidth={1}/> : index === 1 ? <Fingerprint size={34} strokeWidth={1}/> : <Code2 size={34} strokeWidth={1}/>}<strong>{item.title}</strong><i/><i/><i/></button>)}</div>}
-      {project.id === 'qr-security' && <div className="qr-diagram"><div className="qr-focus"><ScanLine size={86} strokeWidth={.8}/><i/><i/><i/><i/></div><div><span>QR / UPI ARTIFACT</span><strong>Read the destination.<br/>Explain the risk.</strong><small>Risk scoring · XAI</small></div></div>}
-      {project.id === 'phishing' && <div className="url-diagram"><span>ILLUSTRATIVE INPUT</span><code><i>https://</i>example.invalid<span>/login</span></code><div className="url-features"><span>URL structure</span><span>Lexical features</span><span>ML classification</span></div></div>}
-      {project.id === 'civiclens' && <div className="api-diagram"><div><Shield size={32} strokeWidth={1}/><span>JWT / RBAC</span></div><ArrowUpRight size={22}/><div><Code2 size={32} strokeWidth={1}/><span>REST API</span></div><ArrowUpRight size={22}/><div><Layers3 size={32} strokeWidth={1}/><span>COMPLAINTS</span></div></div>}
+      {project.id === 'netra' && <div className="netra-artifacts">{project.stages.map((item, index) => <button key={item.title} aria-pressed={stage === index} className={`evidence-sheet sheet-${index} ${stage === index ? 'active' : ''}`} onClick={() => setStage(index)}><span>DEVELOPMENT / 0{index + 1}</span>{index === 0 ? <Layers3 size={34} strokeWidth={1}/> : index === 1 ? <Fingerprint size={34} strokeWidth={1}/> : index === 2 ? <Code2 size={34} strokeWidth={1}/> : <Shield size={34} strokeWidth={1}/>}<strong>{item.title}</strong><i/><i/><i/></button>)}</div>}
+      {project.id === 'qr-security' && <ProjectModel kind="qr-security" stage={stage}/>}
+      {project.id === 'phishing' && <ProjectModel kind="phishing" stage={stage}/>}
+      {project.id === 'civiclens' && <ProjectModel kind="civiclens" stage={stage}/>}
     </div>
     {project.id !== 'threatcore' && <div className="visual-stages" role="group" aria-label={`${project.title} architecture stages`}>{project.stages.map((item,index) => <button key={item.title} aria-pressed={stage === index} onClick={() => setStage(index)}>{item.title}</button>)}</div>}
     <p className="visual-stage-description" aria-live="polite">{project.stages[stage].detail}</p>
   </div>;
 }
 const distinct: Record<string, string> = {
-  threatcore: 'The design connects deep-learning detections with MITRE ATT&CK context, a PPO defense agent, and explanations an analyst can read.',
-  netra: 'The research centers on preserving evidence and connecting indicators into an attack narrative, with chain of custody and AI-assisted investigation in scope.',
+  threatcore: 'Now in final-stage development, ThreatCore connects deep-learning detections with MITRE ATT&CK context, a PPO defense agent, and explanations an analyst can read.',
+  netra: 'In active development, NETRA brings evidence provenance, indicator correlation, attack reconstruction, and AI-assisted investigation into one analyst-focused workflow.',
   'qr-security': 'Its focus is QRishing and UPI fraud patterns, with explainable risk scoring that gives each flagged transaction a human-readable justification.',
   phishing: 'URL and lexical feature engineering form the core of the classification approach, with the aim of distinguishing suspicious sources and reducing false positives.',
   civiclens: 'Authentication and role-based access sit alongside duplicate detection and ML prioritization, connecting secure software engineering with intelligent workflows.',
