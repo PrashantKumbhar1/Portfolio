@@ -59,3 +59,16 @@
   .netra-artifacts > .evidence-sheet { padding-inline: 10px; }
   .architecture-flow { grid-template-columns: 1fr; }
 }
+
+/* Native horizontal scrolling keeps every project available without a tall stack. */
+.project-slider-controls { display: none; }
+@media (max-width: 680px) {
+  .project-slider-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+  .project-slider-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: #bca1d009; color: var(--amber); }
+  .project-slider-controls button:disabled { opacity: .3; cursor: default; }
+  .project-slider-controls > span { text-align: center; color: var(--amber); font: 12px/1.6 'JetBrains Mono', monospace; }
+  .project-slider-controls small { display: block; color: var(--muted); font: 10px/1.8 Inter, sans-serif; }
+  .showcase-layout { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 0; overscroll-behavior-x: contain; align-items: stretch; padding-block: 6px 14px; scrollbar-width: thin; scrollbar-color: var(--amber) transparent; }
+  .showcase-layout > .showcase-project { flex: 0 0 100%; width: 100%; min-width: 0; scroll-snap-align: start; }
+  .showcase-layout .model-viewport { touch-action: pan-x pan-y; }
+}

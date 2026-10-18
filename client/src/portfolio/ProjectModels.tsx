@@ -6,7 +6,7 @@ const names={'qr-security':'QR analysis prism',phishing:'URL feature-analysis be
 export function ProjectModel({kind,stage}:Props){
   const [rotation,setRotation]=useState({x:-9,y:-17});
   const drag=useRef<{x:number;y:number;rx:number;ry:number}|null>(null);
-  function down(event:PointerEvent<HTMLDivElement>){if(event.button!==0)return;drag.current={x:event.clientX,y:event.clientY,rx:rotation.x,ry:rotation.y};event.currentTarget.setPointerCapture(event.pointerId);}
+  function down(event:PointerEvent<HTMLDivElement>){if(event.button!==0 || (event.pointerType==='touch' && window.matchMedia('(max-width: 680px)').matches))return;drag.current={x:event.clientX,y:event.clientY,rx:rotation.x,ry:rotation.y};event.currentTarget.setPointerCapture(event.pointerId);}
   function move(event:PointerEvent<HTMLDivElement>){if(!drag.current)return;const d=drag.current;setRotation({x:Math.max(-32,Math.min(32,d.rx-(event.clientY-d.y)*.22)),y:Math.max(-45,Math.min(45,d.ry+(event.clientX-d.x)*.3))});}
   return <div className={`project-model model-${kind}`} data-stage={stage}>
     <div className="model-viewport" role="group" tabIndex={0} aria-label={`${names[kind]}. Drag horizontally with a mouse or touch, or use arrow keys to rotate.`} onPointerDown={down} onPointerMove={move} onPointerUp={()=>{drag.current=null;}} onPointerCancel={()=>{drag.current=null;}} onKeyDown={event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;event.preventDefault();setRotation(r=>({x:Math.max(-32,Math.min(32,r.x+(event.key==='ArrowUp'?-5:event.key==='ArrowDown'?5:0))),y:Math.max(-45,Math.min(45,r.y+(event.key==='ArrowLeft'?-6:event.key==='ArrowRight'?6:0)))}));}}>
