@@ -2,7 +2,5 @@
   command = "npm run build"
   publish = "client/dist"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Routing and headers are generated into client/dist/_redirects and _headers.
+# Only / is a real page; unknown paths must return 404, not a 200 SPA shell.

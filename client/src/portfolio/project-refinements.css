@@ -1,12 +1,14 @@
 ﻿/* Image clarity and project-specific physical depth. */
 .hero-photograph { backdrop-filter: none; }
-.hero-photograph > img {
+.hero-photograph > picture { display: block; }
+.hero-photograph > img, .hero-photograph > picture > img {
   display: block;
   width: 100%;
   height: auto !important;
   aspect-ratio: 1728 / 1931;
   object-fit: contain;
   object-position: center;
+  border-radius: 2px;
   filter: none !important;
 }
 .portrait-depth { transform: none !important; }
@@ -114,3 +116,5 @@
 .delivery-diagnostic { border-top: 1px solid var(--line); padding-top: 13px; margin-top: 12px; }
 .delivery-diagnostic summary { cursor: pointer; color: #ceb3d9; font-size: 11px; }
 .delivery-diagnostic p { color: #c8b7d2; font: 10px/1.9 'JetBrains Mono',monospace; overflow-wrap: anywhere; margin-top: 10px; }
+
+.dialog-loading { position: fixed; inset: auto 24px 24px auto; z-index: 100; padding: 16px 22px; border: 1px solid var(--line); border-radius: 5px; background: var(--base); color: var(--ink); font-size: 13px; box-shadow: 0 10px 40px #17121e66; }

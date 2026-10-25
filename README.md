@@ -10,6 +10,8 @@ npm run dev
 npm run check
 npm run test:portfolio
 npm run build
+npm run seo:check
+npm run seo:preview
 npm run preview -- --host 127.0.0.1 --port 5173
 ```
 
@@ -28,7 +30,7 @@ Netlify uses the existing `netlify.toml`: build `npm run build`, publish `client
 - `ProjectModels.tsx`, `project-refinements.css`: three distinct rotatable CSS 3D models, four NETRA stage cards, and uncropped image presentation. The former simulated investigation is no longer imported or available in the site.
 - `ContactSection.tsx`, `contact-validation.ts`, `contact-delivery.ts`: form integration, validation, complete email payload, timeout handling, and service-specific diagnostics.
 
-The hero uses the unchanged original `client/public/profile.png` at its native 1728 × 1931 resolution, with full aspect ratio and no crop or color filter. This source is not native 4K. The optimized copy remains for the existing social image. `pillai-logo.png` is the available Pillai College of Engineering logo. `social-preview.jpg` is a custom 1200 × 630 sharing image using the portrait. The source Resume download is retained without alteration.
+The hero uses the unchanged original `client/public/profile.png` at its native 1728 × 1931 resolution, with full aspect ratio and no crop or color filter. This source is not native 4K. The existing social preview image remains. `pillai-logo.png` is the available Pillai College of Engineering logo. `social-preview.jpg` is a custom 1200 × 630 sharing image using the portrait. The source Resume download is retained without alteration.
 
 Earlier visual styles and section components remain as historical source but are not imported by the active page.
 
@@ -65,3 +67,11 @@ The stylesheet includes desktop, tablet, and mobile breakpoints, touch-friendly 
 `mobile-polish.css` confines layout refinements to screens up to 680px (with a 370px narrow-screen adjustment), preserving desktop styling. Touch controls have larger targets, stage selectors wrap, long labels fit, form/search inputs use 16px text, and dialogs account for dynamic viewport height. The mobile menu dismisses outside the header and restores toggle focus on Escape. Contact fields are disabled during submission to protect edits from being cleared by an in-flight success.
 
 TypeScript, portfolio render/logic checks, production build, local HTTP asset checks (including Resume), and deployment ZIP integrity pass. Browser/device visual checks and live EmailJS inbox delivery remain unverified because no browser surface is connected.
+
+## SEO build and maintenance
+
+The build now prerenders the real homepage, hydrates it in the browser, and generates the single-URL sitemap, robots file, structured data, 404 document and Netlify routing/header files. Metadata lives in `script/seo-config.mjs`; the production URL is fixed rather than inferred from preview hosts. Nonproduction Netlify contexts receive noindex directives. The original portrait remains unchanged, with responsive WebP alternatives. Optional dialogs load on demand.
+
+Use `npm run seo:preview` (port 5174) and `npm run seo:check -- --url http://127.0.0.1:5174` for local HTTP routing checks. Vite preview has its own SPA fallback and is not a Netlify routing test. No push or deployment was performed for this SEO pass.
+
+See [initial audit and results](docs/SEO_AUDIT.md), [implementation](docs/SEO_IMPLEMENTATION.md), [Search Console setup](docs/GOOGLE_SEARCH_CONSOLE_SETUP.md), and [maintenance](docs/SEO_MAINTENANCE.md). Browser hydration/visual checks and Lighthouse were not completed because Computer Use could not confidently determine Chrome's current URL. Search Console ownership and indexing are not verified.
